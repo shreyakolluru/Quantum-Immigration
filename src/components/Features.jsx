@@ -1,175 +1,250 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect, useRef } from 'react';
+import * as Tabs from "@radix-ui/react-tabs";
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  UserPlus, 
+  FileSearch, 
+  ClipboardCheck, 
+  Send, 
+  Sparkles, 
+  ShieldCheck
+} from "lucide-react";
+
 import TextWheel from './TextWheel'; 
 import Stats from './Stats';
 
 const Features = () => {
+  const tabs = [
+    {
+      value: "immi-agent",
+      icon: <UserPlus className="h-4 w-4" />,
+      label: "Immi Agent",
+      badge: "Module 1 — Quantum Immi Agent",
+      title: "Your 24/7 website receptionist.",
+      points: [
+        { bold: "Greets visitors instantly", text: "and answers FAQs conversationally" },
+        { bold: "Captures and qualifies", text: "high-intent leads through custom fields" },
+        { bold: "Auto-books meetings", text: "directly to your calendar" },
+        { bold: "Prospect Fact Sheets", text: "generated automatically before calls" },
+      ],
+      buttonText: "Buy Module 1",
+      imageSrc: "/feature-agent.png",
+    },
+    {
+      value: "course-match",
+      icon: <FileSearch className="h-4 w-4" />,
+      label: "Course Match",
+      badge: "Module 2 — Quantum Course Match",
+      title: "Personalized shortlists with Match %.",
+      points: [
+        { bold: "Matches by profile", text: "career goals, and specific budget" },
+        { bold: "Pathway Alignment", text: "aligns choice with labour market demand" },
+        { bold: "Trust Reasoning", text: "provides 'Why this course' logic" },
+        { bold: "Ranked Shortlists", text: "with clear percentage match scores" }
+      ],
+      buttonText: "Buy Module 2",
+      imageSrc: "/feature 1.png",
+    },
+    {
+      value: "doc-manager",
+      icon: <ClipboardCheck className="h-4 w-4" />,
+      label: "Doc Manager",
+      badge: "Module 3 — Document Management",
+      title: "Documents arrive messy. Your process shouldn’t.",
+      points: [
+        { bold: "Automated Intake", text: "handles uploads and email intake" },
+        { bold: "Checklist Status", text: "real-time updates for received or verified" },
+        { bold: "Smart Reminders", text: "automatically alerts clients of missing items" },
+        { bold: "Consolidated Packs", text: "generates form sets for confirmation" }
+      ],
+      buttonText: "Buy Module 3",
+      imageSrc: "/feature 2.png",
+    },
+    {
+      value: "prefill",
+      icon: <Send className="h-4 w-4" />,
+      label: "App Prefill",
+      badge: "Module 4 — Application Prefill",
+      title: "Apply to multiple universities faster.",
+      points: [
+        { bold: "Eliminate Retyping", text: "stop entering the same data into multiple portals" },
+        { bold: "Auto-prefill", text: "uses admission data to populate portal fields" },
+        { bold: "Error Reduction", text: "removes manual mistakes from typing" },
+        { bold: "Maintain Control", text: "consultants review everything before submission" }
+      ],
+      buttonText: "Buy Module 4",
+      imageSrc: "/feature-prefill.png",
+    },
+    {
+      value: "sop-gen",
+      icon: <Sparkles className="h-4 w-4" />,
+      label: "SOP Generator",
+      badge: "Module 5 — SOP Generation",
+      title: "Specific, grounded, and consistent SOPs.",
+      points: [
+        { bold: "Fix Common Issues", text: "eliminates generic templates and weak logic" },
+        { bold: "Profile Alignment", text: "drafts SOPs based on student profile" },
+        { bold: "Best-practice Structure", text: "provides guidance so students can refine" },
+        { bold: "Stronger Credibility", text: "includes key grounding facts" }
+      ],
+      buttonText: "Buy Module 5",
+      imageSrc: "/feature-sop.png",
+    },
+    {
+      value: "visa-manager",
+      icon: <ShieldCheck className="h-4 w-4" />,
+      label: "Visa Manager",
+      badge: "Module 6 — Visa Manager",
+      title: "End-to-end visa processing.",
+      points: [
+        { bold: "Checklist Management", text: "visa-specific automated tracking" },
+        { bold: "Master Form", text: "confirmation sent to client before lodgement" },
+        { bold: "Portal Prefill", text: "automatically populates the visa portal" },
+        { bold: "Real-time Alerts", text: "notifications for consultants" }
+      ],
+      buttonText: "Buy Module 6",
+      imageSrc: "/feature-visa.png",
+    },
+  ];
+
+  const [activeTab, setActiveTab] = useState(tabs[0].value);
+  const ROTATION_TIME = 10000; 
+  const timerRef = useRef(null);
+  const isPaused = useRef(false);
+
+  const startRotation = () => {
+    stopRotation();
+    timerRef.current = setInterval(() => {
+      if (!isPaused.current) {
+        setActiveTab((currentTab) => {
+          const currentIndex = tabs.findIndex((tab) => tab.value === currentTab);
+          const nextIndex = (currentIndex + 1) % tabs.length;
+          return tabs[nextIndex].value;
+        });
+      }
+    }, ROTATION_TIME);
+  };
+
+  const stopRotation = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+  };
+
+  useEffect(() => {
+    startRotation();
+    return () => stopRotation();
+  }, [tabs]);
+
+  const activeTabData = tabs.find((t) => t.value === activeTab);
+
   return (
-    <section className="py-24 px-6 bg-[#F4F2F1] font-sans overflow-hidden">
-      <div className="max-w-7xl mx-auto space-y-32">
+    <section className="py-12 md:py-24 px-4 md:px-6 bg-[#F4F2F1] font-sans overflow-hidden">
+      <div className="max-w-7xl mx-auto flex flex-col items-center">
         
-        {/* ==========================================
-            SECTION 1: Not a CRM / Workflow Engine
-            ========================================== */}
-        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start">
-          
-          {/* LEFT COLUMN: Text Content */}
-          <div className="flex-1 max-w-xl pt-10">
-            <div className="inline-block px-3 py-1 mb-6 rounded-full border border-gray-200 bg-white/50 backdrop-blur-sm">
-              <span className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
-                Not a CRM. Not a Chatbot.
-              </span>
-            </div>
-
-            <h2 className="text-5xl font-semibold text-gray-900 leading-[1.1] mb-12">
-              A Workflow Engine
-            </h2>
-
-            {/* Feature Icons Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12">
-              <div className="group">
-                <div className="w-10 h-10 rounded-lg bg-red-50 flex items-center justify-center mb-4 text-red-500">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
-                </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">A Guided Path</h3>
-                <p className="text-gray-500 leading-relaxed text-[15px]">Hand-holds students through the entire journey</p>
-              </div>
-
-              <div className="group">
-                <div className="w-10 h-10 rounded-lg bg-purple-50 flex items-center justify-center mb-4 text-purple-500">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" /></svg>
-                </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Automated Reminders</h3>
-                <p className="text-gray-500 leading-relaxed text-[15px]">Automates follow-ups eliminates manual chasing</p>
-              </div>
-
-              <div className="group">
-                <div className="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center mb-4 text-green-500">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
-                </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Prefills SOPs</h3>
-                <p className="text-gray-500 leading-relaxed text-[15px]">Prepares applications and documents</p>
-              </div>
-
-              <div className="group">
-                <div className="w-10 h-10 rounded-lg bg-orange-50 flex items-center justify-center mb-4 text-orange-500">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
-                </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Decision-Focused Consulting</h3>
-                <p className="text-gray-500 leading-relaxed text-[15px]">Lets consultants focus on advice not paperwork</p>
-              </div>
-            </div>
-          </div>
-
-          {/* RIGHT COLUMN: Feature Image 1 Mockup */}
-          <div className="flex-1 w-full relative">
-            <div className="bg-white rounded-3xl p-6 md:p-8 shadow-xl shadow-gray-200/50 border border-gray-100/50 relative overflow-hidden h-full min-h-[500px] flex items-center justify-center">
-              <div className="absolute top-8 right-8 bg-black text-white text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider z-20">
-                New Project
-              </div>
-
-              <div className="relative z-10 w-full rounded-2xl overflow-hidden border border-gray-200 shadow-2xl">
-                <img src="/feature 1.png" alt="Feature 1" className="w-full h-auto block" />
-              </div>
-
-              <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-gray-50 to-white -z-10"></div>
-            </div>
-          </div>
+        {/* PROBLEM HOOK */}
+        <div className="w-full pb-12 md:pb-20 text-center">
+          <TextWheel />
         </div>
 
-        {/* ==========================================
-            SECTION 2: Eliminate Manual Work
-            ========================================== */}
-        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-center">
-          
-          {/* LEFT COLUMN: Timeline Mockup (Design Preserved + Fixed Coverage) */}
-          <div className="flex-1 w-full">
-            <div className="bg-white rounded-2xl p-4 shadow-xl shadow-gray-200/40">
-                <div className="bg-[#111111] rounded-xl overflow-hidden shadow-2xl relative flex flex-col min-h-[520px]">
-                    
-                    {/* Header */}
-                    <div className="flex justify-between items-center p-4 border-b border-white/10 shrink-0 z-30 bg-[#111111]">
-                        <div className="flex items-center gap-2">
-                            <span className="text-white">
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                            </span>
-                            <span className="text-sm font-medium text-white">Course Recommendation</span>
-                        </div>
-                    </div>
-
-                    {/* Timeline Body Area */}
-                    <div className="relative flex-1 w-full overflow-hidden bg-[#F8F7F6]">
-                        
-                        {/* THE IMAGE: Covers space perfectly, aligned to top to show title */}
-                        <img 
-                          src="/feature 2.png" 
-                          alt="Timeline" 
-                          className="absolute inset-0 w-full h-full object-cover object-top" 
-                        />
-
-                        {/* RESTORED: Assign Task Overlay at the BOTTOM */}
-                        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col-reverse items-center pointer-events-none">
-                            <div className="bg-black text-white text-[11px] font-bold px-4 py-2 rounded-full shadow-2xl flex items-center gap-2 mt-1 border border-white/20">
-                                Top Courses
-                                <svg className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </div>
-
-                            <div className="h-10 w-px bg-red-500 shadow-lg"></div>
-                            
-                            <div className="bg-[#111] p-1.5 rounded-full flex gap-1 shadow-2xl border border-white/10">
-                                <img src="https://i.pravatar.cc/100?img=1" alt="User" className="w-7 h-7 rounded-full border border-gray-700" />
-                                <img src="https://i.pravatar.cc/100?img=3" alt="User" className="w-7 h-7 rounded-full border border-gray-700" />
-                                <img src="https://i.pravatar.cc/100?img=5" alt="User" className="w-7 h-7 rounded-full border border-gray-700" />
-                            </div>
-                        </div>
-
-                        {/* Gradient shade for bottom contrast */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none"></div>
-                    </div>
-                </div>
-            </div>
+        <Tabs.Root 
+          value={activeTab} 
+          onValueChange={(val) => {
+            setActiveTab(val);
+            startRotation();
+          }} 
+          className="w-full"
+        >
+          {/* MOBILE SCROLLABLE TABS */}
+          <div className="relative w-full mb-12 md:mb-24">
+            <Tabs.List className="flex items-center justify-start md:justify-center gap-3 overflow-x-auto no-scrollbar scroll-smooth px-2 pb-4 
+              [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)] md:[mask-image:none]">
+              {tabs.map((tab) => (
+                <Tabs.Trigger
+                  key={tab.value}
+                  value={tab.value}
+                  className="group relative flex-shrink-0 p-[1.5px] rounded-lg transition-all data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-400 data-[state=active]:to-blue-500 focus:outline-none"
+                >
+                  <div className="flex items-center gap-2 md:gap-3 px-6 md:px-10 py-3 md:py-4 rounded-[7px] text-xs md:text-sm font-bold bg-white text-gray-500 transition-all 
+                    group-data-[state=active]:text-gray-900 whitespace-nowrap">
+                    <span className="group-data-[state=active]:text-blue-500">{tab.icon}</span>
+                    {tab.label}
+                  </div>
+                  {/* Progress bar line removed from here */}
+                </Tabs.Trigger>
+              ))}
+            </Tabs.List>
           </div>
 
-          {/* RIGHT COLUMN: Text Content & Checklist */}
-          <div className="flex-1 max-w-xl">
-             <div className="inline-block px-3 py-1 mb-6 rounded-full border border-gray-200 bg-white/50 backdrop-blur-sm">
-              <span className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
-                Designed to Eliminate Manual Work
-              </span>
-            </div>
+          {/* CONTENT AREA WITH HOVER PAUSE */}
+          <div 
+            className="w-full min-h-fit md:min-h-[600px] relative"
+            onMouseEnter={() => { isPaused.current = true; }}
+            onMouseLeave={() => { isPaused.current = false; }}
+          >
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="flex flex-col lg:flex-row gap-10 md:gap-16 lg:gap-24 items-center w-full"
+              >
+                {/* TEXT COLUMN */}
+                <div className="flex-1 w-full max-w-xl order-2 lg:order-1 text-left">
+                  <div className="inline-block px-3 py-1 mb-4 md:mb-6 rounded-full border border-gray-200 bg-white/50 backdrop-blur-sm">
+                    <span className="text-[9px] md:text-[10px] font-bold text-gray-600 uppercase tracking-widest">
+                      {activeTabData?.badge}
+                    </span>
+                  </div>
 
-            <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-[1.1] mb-8">
-              Work Smarter with Quantum Immigration Powerful Features
-            </h2>
-            
-            <ul className="space-y-5">
-                {[
-                    { bold: "Application and VISA Checklist Manager", text: "- validates, and tracks documents in one place with clear checklists" },
-                    { bold: "AI Based Course Search", text: "- shows match percentages, and explains gaps" },
-                    { bold: "AI-Driven Application Forms and SOP Generation", text: "that consultants review" },
-                    { bold: "AI-Generated, Human-Approved", text: "- Real-time communication and meeting booking with consultants" }
-                ].map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-3">
-                        <div className="flex-shrink-0 mt-1 w-6 h-6 rounded-lg bg-gradient-to-br from-blue-500 to-green-500 p-[2px]">
-                            <div className="w-full h-full rounded-lg bg-[#111111] flex items-center justify-center">
-                                <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
-                            </div>
+                  <h3 className="text-3xl md:text-5xl font-semibold text-gray-900 leading-[1.2] md:leading-[1.1] mb-6 md:mb-10 tracking-tight">
+                    {activeTabData?.title}
+                  </h3>
+                  
+                  <ul className="grid grid-cols-1 gap-4 md:gap-5 mb-8 md:mb-10">
+                    {activeTabData?.points.map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-3 md:gap-4 text-left">
+                        <div className="flex-shrink-0 mt-1 w-5 h-5 md:w-6 md:h-6 rounded-lg bg-gradient-to-br from-blue-500 to-green-500 p-[1.5px] md:p-[2px]">
+                          <div className="w-full h-full rounded-lg bg-[#111111] flex items-center justify-center">
+                            <svg className="w-3 md:w-3.5 h-3 md:h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                            </svg>
+                          </div>
                         </div>
-                        <span className="text-gray-700 text-[16px] leading-relaxed font-medium">
-                            <span className="font-bold text-gray-900">{item.bold}</span> {item.text}
+                        <span className="text-gray-700 text-sm md:text-[16px] leading-relaxed font-medium">
+                          <span className="font-bold text-gray-900">{item.bold}</span> {item.text}
                         </span>
-                    </li>
-                ))}
-            </ul>
+                      </li>
+                    ))}
+                  </ul>
 
+                  <button className="w-full md:w-fit bg-black text-white px-7 py-3 rounded-lg font-bold text-sm md:text-base hover:bg-gray-800 transition-all shadow-md active:scale-95">
+                    {activeTabData?.buttonText} →
+                  </button>
+                </div>
+
+                {/* IMAGE COLUMN */}
+                <div className="flex-1 w-full relative order-1 lg:order-2">
+                  <div className="bg-white rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-xl border border-gray-100/50 flex items-center justify-center">
+                    <div className="relative z-10 w-full rounded-xl md:rounded-2xl overflow-hidden border border-gray-200 shadow-2xl bg-white h-[280px] sm:h-[400px] md:h-[500px]">
+                      <img 
+                        src={activeTabData?.imageSrc} 
+                        alt={activeTabData?.label} 
+                        className="w-full h-full object-cover object-top block" 
+                      />
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
+        </Tabs.Root>
 
+        <div className="mt-24 md:mt-40 w-full">
+          <Stats />
         </div>
-
-        <div className="pt-20 md:pt-32 pb-20">
-             <TextWheel />
-        </div>
-        <Stats />
-
       </div>
     </section>
   );

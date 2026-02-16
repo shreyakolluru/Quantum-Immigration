@@ -1,18 +1,17 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
 
-// Simple SVG Checkmark Component
+// --- Icons ---
 const CheckIcon = () => (
   <svg 
     xmlns="http://www.w3.org/2000/svg" 
-    width="20" 
-    height="20" 
+    width="16" 
+    height="16" 
     viewBox="0 0 24 24" 
     fill="none" 
     stroke="currentColor" 
-    strokeWidth="2.5" 
+    strokeWidth="3" 
     strokeLinecap="round" 
     strokeLinejoin="round"
   >
@@ -20,150 +19,108 @@ const CheckIcon = () => (
   </svg>
 );
 
+const StepIcon = ({ id }) => {
+  const iconProps = { className: "w-8 h-8 text-white", strokeWidth: 1.5 };
+  switch (id) {
+    case "1": 
+      return <svg {...iconProps} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>;
+    case "2": 
+      return <svg {...iconProps} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>;
+    case "3": 
+      return <svg {...iconProps} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>;
+    default:
+      return <div className="w-8 h-8 bg-white/20 rounded-full" />;
+  }
+};
+
 const Process = () => {
   const steps = [
     {
       id: "1",
-      title: "AI-Powered Lead Capture & Qualification",
-      tag: "Step 1",
-      tagColor: "bg-green-100 text-green-800",
+      title: "Configure your workflow",
       bullets: [
-        "Stop manually entering leads",
-        "AI captures student leads directly",
-        "Creates a profile from website ads"
+        "Set your intake fields",
+        "Qualification rules & checklists",
+        "Automated reminders & approvals"
       ]
     },
     {
       id: "2",
-      title: "Automated Course Matching & Eligibility",
-      tag: "Step 2",
-      tagColor: "bg-blue-100 text-blue-800",
+      title: "Quantum runs the process",
       bullets: [
-        "AI suggests best-fit courses",
-        "Over 25+ options provided",
-        "Provides clear reasoning"
+        "Captures & matches courses",
+        "Generates SOPs & manages docs",
+        "Pre-fills applications & portals"
       ]
     },
     {
       id: "3",
-      title: "Smart Document & Application Automation",
-      tag: "Step 3",
-      tagColor: "bg-purple-100 text-purple-800",
+      title: "You stay in control",
       bullets: [
-        "Scans certificates and resumes",
-        "Pre-fill university forms",
-        "Automates visa application forms"
-      ]
-    },
-    {
-      id: "4",
-      title: "Centralised Communication & Real-Time Visibility",
-      tag: "Step 4",
-      tagColor: "bg-orange-100 text-orange-800",
-      bullets: [
-        "End the communication chaos",
-        "Get a real-time dashboard",
-        "Shows status of every case"
-      ]
-    },
-    {
-      id: "5",
-      title: "Guided Revisions & Visa-Ready Outcomes",
-      tag: "Step 5",
-      tagColor: "bg-pink-100 text-pink-800",
-      bullets: [
-        "Consultants can request edits",
-        "Complete applications",
-        "Advisor-approved outcomes"
+        "Consultants review & approve",
+        "Submit faster with fewer errors",
+        "Real-time status tracking"
       ]
     }
   ];
 
   return (
-    <section className="py-24 bg-[#F4F2F1] font-sans overflow-hidden">
+    // Reduced vertical padding: py-8 on mobile, py-12 on desktop
+    <section className="py-8 md:py-12 bg-[#F4F2F1] font-sans">
       <div className="max-w-7xl mx-auto px-6">
         
-        {/* CENTERED HEADER SECTION */}
-        <div className="text-center mb-20 max-w-4xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight leading-tight mb-6">
-            How Quantum Immigration Transforms <br className="hidden md:block"/> Your Workflow in 5 Steps
+        {/* CENTERED HEADER - Reduced margin bottom */}
+        <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
+          <h2 className="text-3xl md:text-5xl font-semibold text-gray-900 tracking-tight leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
+            How it works in 3 simple steps
           </h2>
         </div>
 
-        {/* TIMELINE CONTAINER */}
-        <div className="relative">
-          
-          {/* CENTRAL VERTICAL LINE (Desktop) */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-px bg-gray-300 hidden md:block"></div>
-          
-          {/* MOBILE VERTICAL LINE (Left aligned) */}
-          <div className="absolute left-6 top-0 bottom-0 w-px bg-gray-300 md:hidden"></div>
-
-          <div className="flex flex-col gap-12 md:gap-24 relative">
-            {steps.map((step, index) => {
-              const isEven = index % 2 !== 0; // Right side
-              
-              return (
-                <motion.div 
-                  key={step.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className={`relative flex flex-col md:flex-row items-center ${
-                    isEven ? 'md:flex-row-reverse' : ''
-                  }`}
-                >
-                  
-                  {/* CENTRAL NUMBER NODE */}
-                  <div className="absolute left-6 md:left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:translate-y-0 top-0 md:top-auto w-10 h-10 md:w-16 md:h-16 bg-white border border-gray-200 rounded-full flex items-center justify-center z-20 shadow-sm">
-                    <span className="text-lg md:text-xl font-bold text-gray-600">{step.id}</span>
-                  </div>
-
-                  {/* CONTENT CARD HALF */}
-                  <div className={`w-full md:w-1/2 pl-16 md:pl-0 ${isEven ? 'md:pl-24' : 'md:pr-24'}`}>
-                    <div 
-                      className="relative p-8 rounded-3xl shadow-sm transition-all hover:shadow-md bg-gradient-to-br from-[#FFE4E1] via-[#FFFACD] to-[#E0F7FA] border border-white/60"
-                    >
-                      {/* CONNECTING LINE (Horizontal) */}
-                      <div className={`hidden md:block absolute top-1/2 h-px w-24 bg-gray-300 
-                        ${isEven ? '-left-24' : '-right-24'}
-                      `}></div>
-
-                      {/* Header Row: Title + Tag */}
-                      <div className="flex flex-col gap-3 mb-6">
-                        <div className="flex justify-between items-start">
-                             <span className={`px-3 py-1 rounded-full text-[10px] uppercase font-bold tracking-wider ${step.tagColor}`}>
-                              {step.tag}
-                            </span>
-                        </div>
-                        <h3 className="text-2xl font-bold text-gray-900 leading-tight">{step.title}</h3>
-                      </div>
-
-                      {/* Checkbox List */}
-                      <ul className="space-y-3">
-                        {step.bullets.map((bullet, i) => (
-                          <li key={i} className="flex items-start gap-3">
-                            <div className="mt-0.5 text-gray-900 shrink-0">
-                              <CheckIcon />
-                            </div>
-                            <span className="text-sm font-medium text-gray-800 leading-relaxed">
-                              {bullet}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-
+        {/* FLIP CARD GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+          {steps.map((step) => (
+            <div key={step.id} className="group h-[380px] md:h-[420px] w-full [perspective:1000px] cursor-pointer">
+              <div className="relative h-full w-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                
+                {/* --- FRONT FACE --- */}
+                <div className="absolute inset-0 h-full w-full rounded-3xl bg-gradient-to-br from-blue-600 to-emerald-500 p-8 flex flex-col justify-between [backface-visibility:hidden] shadow-xl">
+                  <div className="flex justify-between items-start">
+                    <div className="w-14 h-14 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20">
+                      <StepIcon id={step.id} />
                     </div>
+                    <span className="text-6xl font-bold text-white/20">0{step.id}</span>
                   </div>
 
-                  {/* EMPTY HALF (For Layout Balance on Desktop) */}
-                  <div className="hidden md:block w-1/2"></div>
+                  <div className="w-full">
+                    <h3 className="text-lg sm:text-xl md:text-[1.3rem] lg:text-2xl font-bold text-white leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
+                      {step.title}
+                    </h3>
+                    <div className="w-12 h-1 bg-white/40 mt-6 rounded-full"></div>
+                  </div>
+                </div>
 
-                </motion.div>
-              );
-            })}
-          </div>
+                {/* --- BACK FACE --- */}
+                <div className="absolute inset-0 h-full w-full rounded-3xl bg-white border border-gray-100 p-8 [transform:rotateY(180deg)] [backface-visibility:hidden] shadow-xl flex flex-col justify-center">
+                  <div className="mb-4">
+                    <span className="text-blue-600 font-bold tracking-wider text-[10px] md:text-xs uppercase mb-1 block">Phase 0{step.id}</span>
+                    <h4 className="text-lg font-bold text-gray-900 whitespace-nowrap">{step.title}</h4>
+                  </div>
+                  <ul className="space-y-3">
+                    {step.bullets.map((bullet, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <div className="mt-0.5 text-emerald-500 shrink-0"><CheckIcon /></div>
+                        <span className="text-sm font-medium text-gray-600">{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-auto pt-6 border-t border-gray-100">
+                     <p className="text-[10px] text-gray-400 text-center uppercase tracking-widest font-semibold">Hover to Flip</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

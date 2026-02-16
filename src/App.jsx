@@ -43,8 +43,6 @@ function App() {
           <InterestingFeatures />
           <UniquePotential />
         </section>
-
-        <Testimonials />
         <Process />
 
         <section id="pricing">
