@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import * as Tabs from "@radix-ui/react-tabs";
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { 
   UserPlus, 
   FileSearch, 
@@ -30,7 +29,7 @@ const Features = () => {
         { bold: "Prospect Fact Sheets", text: "generated automatically before calls" },
       ],
       buttonText: "Buy Module 1",
-      imageSrc: "/feature-agent.png",
+      images: ["/feature-agent.png", "/feature-agent.png", "/feature-agent.png", "/feature-agent.png"],
     },
     {
       value: "course-match",
@@ -45,7 +44,7 @@ const Features = () => {
         { bold: "Ranked Shortlists", text: "with clear percentage match scores" }
       ],
       buttonText: "Buy Module 2",
-      imageSrc: "/feature 1.png",
+      images: ["/feature 1.png", "/feature 1.png", "/feature 1.png", "/feature 1.png"],
     },
     {
       value: "doc-manager",
@@ -60,7 +59,7 @@ const Features = () => {
         { bold: "Consolidated Packs", text: "generates form sets for confirmation" }
       ],
       buttonText: "Buy Module 3",
-      imageSrc: "/feature 2.png",
+      images: ["/feature 2.png", "/feature 2.png", "/feature 2.png", "/feature 2.png"],
     },
     {
       value: "prefill",
@@ -75,7 +74,7 @@ const Features = () => {
         { bold: "Maintain Control", text: "consultants review everything before submission" }
       ],
       buttonText: "Buy Module 4",
-      imageSrc: "/feature-prefill.png",
+      images: ["/feature-prefill.png", "/feature-prefill.png", "/feature-prefill.png", "/feature-prefill.png"],
     },
     {
       value: "sop-gen",
@@ -90,7 +89,7 @@ const Features = () => {
         { bold: "Stronger Credibility", text: "includes key grounding facts" }
       ],
       buttonText: "Buy Module 5",
-      imageSrc: "/feature-sop.png",
+      images: ["/feature-sop.png", "/feature-sop.png", "/feature-sop.png", "/feature-sop.png"],
     },
     {
       value: "visa-manager",
@@ -105,41 +104,41 @@ const Features = () => {
         { bold: "Real-time Alerts", text: "notifications for consultants" }
       ],
       buttonText: "Buy Module 6",
-      imageSrc: "/feature-visa.png",
+      images: ["/feature-visa.png", "/feature-visa.png", "/feature-visa.png", "/feature-visa.png"],
     },
   ];
 
-  const [activeTab, setActiveTab] = useState(tabs[0].value);
-  const ROTATION_TIME = 10000; 
-  const timerRef = useRef(null);
-  const isPaused = useRef(false);
+  // Different entrance animation per card (index 0–5)
+  const imageAnimations = [
+    { initial: { opacity: 0, x: -48 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+    { initial: { opacity: 0, x: 48 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+    { initial: { opacity: 0, filter: 'blur(12px)' }, whileInView: { opacity: 1, filter: 'blur(0px)' }, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+    { initial: { opacity: 0, y: 40 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+    { initial: { opacity: 0, scale: 0.92 }, whileInView: { opacity: 1, scale: 1 }, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+    { initial: { opacity: 0, x: 36, y: 20 }, whileInView: { opacity: 1, x: 0, y: 0 }, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+  ];
 
-  const startRotation = () => {
-    stopRotation();
-    timerRef.current = setInterval(() => {
-      if (!isPaused.current) {
-        setActiveTab((currentTab) => {
-          const currentIndex = tabs.findIndex((tab) => tab.value === currentTab);
-          const nextIndex = (currentIndex + 1) % tabs.length;
-          return tabs[nextIndex].value;
-        });
-      }
-    }, ROTATION_TIME);
-  };
-
-  const stopRotation = () => {
-    if (timerRef.current) clearInterval(timerRef.current);
-  };
+  const timelineRef = useRef(null);
+  const containerRef = useRef(null);
+  const [height, setHeight] = useState(0);
 
   useEffect(() => {
-    startRotation();
-    return () => stopRotation();
+    if (timelineRef.current) {
+      const rect = timelineRef.current.getBoundingClientRect();
+      setHeight(rect.height);
+    }
   }, [tabs]);
 
-  const activeTabData = tabs.find((t) => t.value === activeTab);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start 10%', 'end 50%'],
+  });
+
+  const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height]);
+  const opacityTransform = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
 
   return (
-    <section className="py-12 md:py-24 px-4 md:px-6 bg-[#F4F2F1] font-sans overflow-hidden">
+    <section className="py-12 md:py-24 px-4 md:px-6 bg-[#F4F2F1] dark:bg-black font-sans overflow-hidden">
       <div className="max-w-7xl mx-auto flex flex-col items-center">
         
         {/* PROBLEM HOOK */}
@@ -147,100 +146,90 @@ const Features = () => {
           <TextWheel />
         </div>
 
-        <Tabs.Root 
-          value={activeTab} 
-          onValueChange={(val) => {
-            setActiveTab(val);
-            startRotation();
-          }} 
-          className="w-full"
-        >
-          {/* MOBILE SCROLLABLE TABS */}
-          <div className="relative w-full mb-12 md:mb-24">
-            <Tabs.List className="flex items-center justify-start md:justify-center gap-3 overflow-x-auto no-scrollbar scroll-smooth px-2 pb-4 
-              [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)] md:[mask-image:none]">
-              {tabs.map((tab) => (
-                <Tabs.Trigger
-                  key={tab.value}
-                  value={tab.value}
-                  className="group relative flex-shrink-0 p-[1.5px] rounded-lg transition-all data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-400 data-[state=active]:to-blue-500 focus:outline-none"
-                >
-                  <div className="flex items-center gap-2 md:gap-3 px-6 md:px-10 py-3 md:py-4 rounded-[7px] text-xs md:text-sm font-bold bg-white text-gray-500 transition-all 
-                    group-data-[state=active]:text-gray-900 whitespace-nowrap">
-                    <span className="group-data-[state=active]:text-blue-500">{tab.icon}</span>
-                    {tab.label}
-                  </div>
-                  {/* Progress bar line removed from here */}
-                </Tabs.Trigger>
-              ))}
-            </Tabs.List>
-          </div>
-
-          {/* CONTENT AREA WITH HOVER PAUSE */}
-          <div 
-            className="w-full min-h-fit md:min-h-[600px] relative"
-            onMouseEnter={() => { isPaused.current = true; }}
-            onMouseLeave={() => { isPaused.current = false; }}
-          >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTab}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-                className="flex flex-col lg:flex-row gap-10 md:gap-16 lg:gap-24 items-center w-full"
+        {/* TIMELINE: 2 columns — text left, image right; scroll line on left edge */}
+        <div className="w-full" ref={containerRef}>
+          <div ref={timelineRef} className="relative max-w-7xl mx-auto pb-20 pl-10 md:pl-12">
+            {tabs.map((tab, index) => (
+              <div
+                key={tab.value}
+                className="relative flex flex-col lg:flex-row gap-10 md:gap-16 lg:gap-24 items-start pt-16 md:pt-24 first:pt-10 md:first:pt-16"
               >
-                {/* TEXT COLUMN */}
-                <div className="flex-1 w-full max-w-xl order-2 lg:order-1 text-left">
-                  <div className="inline-block px-3 py-1 mb-4 md:mb-6 rounded-full border border-gray-200 bg-white/50 backdrop-blur-sm">
-                    <span className="text-[9px] md:text-[10px] font-bold text-gray-600 uppercase tracking-widest">
-                      {activeTabData?.badge}
+                {/* Circle on timeline bar */}
+                <div className="absolute -left-[3.75rem] md:-left-[4.25rem] top-0 w-10 h-10 rounded-full bg-[#F4F2F1] dark:bg-black flex items-center justify-center border border-gray-200 dark:border-white/10 z-10">
+                  <div className="h-4 w-4 rounded-full bg-white border-2 border-blue-400" />
+                </div>
+                {/* TEXT COLUMN (left) */}
+                <div className="flex-1 w-full max-w-xl text-left">
+                  <div className="inline-flex items-center gap-2 mb-3">
+                    <span className="text-[10px] md:text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-widest">
+                      {tab.badge}
                     </span>
                   </div>
-
-                  <h3 className="text-3xl md:text-5xl font-semibold text-gray-900 leading-[1.2] md:leading-[1.1] mb-6 md:mb-10 tracking-tight">
-                    {activeTabData?.title}
+                  <h3 className="text-xl md:text-2xl font-medium text-gray-800 dark:text-white leading-snug mb-5 md:mb-6">
+                    {tab.title}
                   </h3>
-                  
-                  <ul className="grid grid-cols-1 gap-4 md:gap-5 mb-8 md:mb-10">
-                    {activeTabData?.points.map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-3 md:gap-4 text-left">
-                        <div className="flex-shrink-0 mt-1 w-5 h-5 md:w-6 md:h-6 rounded-lg bg-gradient-to-br from-blue-500 to-green-500 p-[1.5px] md:p-[2px]">
-                          <div className="w-full h-full rounded-lg bg-[#111111] flex items-center justify-center">
-                            <svg className="w-3 md:w-3.5 h-3 md:h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <ul className="grid grid-cols-1 gap-3 md:gap-4 mb-6 md:mb-8">
+                    {tab.points.map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-3 text-left">
+                        <div className="flex-shrink-0 mt-1 w-4 h-4 md:w-5 md:h-5 rounded-md bg-gradient-to-br from-blue-500 to-emerald-500 p-[1.5px]">
+                          <div className="w-full h-full rounded-[5px] bg-[#111111] flex items-center justify-center">
+                            <svg className="w-2.5 md:w-3 h-2.5 md:h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                             </svg>
                           </div>
                         </div>
-                        <span className="text-gray-700 text-sm md:text-[16px] leading-relaxed font-medium">
-                          <span className="font-bold text-gray-900">{item.bold}</span> {item.text}
+                        <span className="text-gray-600 dark:text-gray-300 text-sm md:text-base leading-relaxed">
+                          <span className="font-medium text-gray-800 dark:text-gray-200">{item.bold}</span> {item.text}
                         </span>
                       </li>
                     ))}
                   </ul>
-
-                  <button className="w-full md:w-fit bg-black text-white px-7 py-3 rounded-lg font-bold text-sm md:text-base hover:bg-gray-800 transition-all shadow-md active:scale-95">
-                    {activeTabData?.buttonText} →
+                  <button className="w-full md:w-fit bg-black dark:bg-white dark:text-black text-white px-6 py-2.5 rounded-lg font-medium text-sm hover:bg-gray-800 dark:hover:bg-gray-200 transition-all active:scale-[0.98]">
+                    {tab.buttonText} →
                   </button>
                 </div>
-
-                {/* IMAGE COLUMN */}
-                <div className="flex-1 w-full relative order-1 lg:order-2">
-                  <div className="bg-white rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-xl border border-gray-100/50 flex items-center justify-center">
-                    <div className="relative z-10 w-full rounded-xl md:rounded-2xl overflow-hidden border border-gray-200 shadow-2xl bg-white h-[280px] sm:h-[400px] md:h-[500px]">
-                      <img 
-                        src={activeTabData?.imageSrc} 
-                        alt={activeTabData?.label} 
-                        className="w-full h-full object-cover object-top block" 
-                      />
-                    </div>
+                {/* IMAGE COLUMN (right) — 4 images in 2x2 grid per module */}
+                <div className="flex-1 w-full min-w-0">
+                  <div className="bg-white dark:bg-[#141414] rounded-2xl p-4 md:p-6 shadow-lg border border-gray-100 dark:border-white/10 overflow-hidden">
+                    <motion.div
+                      className="grid grid-cols-2 gap-2 md:gap-3"
+                      initial={imageAnimations[index]?.initial}
+                      whileInView={imageAnimations[index]?.whileInView}
+                      viewport={{ once: true, margin: '-60px 0px -60px 0px' }}
+                      transition={imageAnimations[index]?.transition}
+                    >
+                      {(tab.images || []).slice(0, 4).map((src, imgIdx) => (
+                        <div
+                          key={imgIdx}
+                          className="relative rounded-xl overflow-hidden border border-gray-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] aspect-[4/3] min-h-[120px] md:min-h-[160px]"
+                        >
+                          <img
+                            src={src}
+                            alt={`${tab.label} ${imgIdx + 1}`}
+                            className="w-full h-full object-cover object-top block"
+                          />
+                        </div>
+                      ))}
+                    </motion.div>
                   </div>
                 </div>
-              </motion.div>
-            </AnimatePresence>
+              </div>
+            ))}
+            {/* Animated vertical line */}
+            <div
+              style={{ height: height + 'px' }}
+              className="absolute left-0 top-0 overflow-hidden w-1 bg-gradient-to-b from-transparent from-[0%] via-gray-200 dark:via-gray-700 to-transparent to-[99%] [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)]"
+            >
+              <motion.div
+                style={{
+                  height: heightTransform,
+                  opacity: opacityTransform,
+                }}
+                className="absolute inset-x-0 top-0 w-1 bg-gradient-to-t from-blue-500 via-emerald-500 to-transparent from-[0%] via-[10%] rounded-full"
+              />
+            </div>
           </div>
-        </Tabs.Root>
+        </div>
 
         <div className="mt-24 md:mt-40 w-full">
           <Stats />

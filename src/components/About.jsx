@@ -5,37 +5,30 @@ import { MousePointerClick, ShieldCheck, Zap, TrendingUp, Eraser } from 'lucide-
 
 const About = () => {
   return (
-    <section className="py-12 md:py-24 px-4 md:px-6 bg-[#F4F2F1] font-sans">
+    <section className="py-12 md:py-24 px-4 md:px-6 bg-[#F4F2F1] dark:bg-black font-sans">
       <div className="max-w-7xl mx-auto space-y-6">
-        
-        {/* --- MAIN CARD --- */}
-        <div className="bg-white rounded-[24px] md:rounded-[32px] p-6 md:p-12 flex flex-col lg:flex-row gap-8 lg:gap-12 lg:items-center shadow-sm">
-          
-          {/* Left Content */}
+        <div className="bg-white dark:bg-[#141414] rounded-[24px] md:rounded-[32px] p-6 md:p-12 flex flex-col lg:flex-row gap-8 lg:gap-12 lg:items-center shadow-sm border border-transparent dark:border-white/10">
           <div className="flex-1 space-y-6 md:space-y-8">
-            {/* Tag */}
-            <div className="inline-block px-4 py-1.5 rounded-full bg-[#F4F2F1]">
-              <span className="text-[10px] md:text-xs font-bold text-gray-900 uppercase tracking-wide">About Us</span>
+            <div className="inline-block px-4 py-1.5 rounded-full bg-[#F4F2F1] dark:bg-[#1a1a1a]">
+              <span className="text-[10px] md:text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wide">About Us</span>
             </div>
-            
-            {/* Heading */}
-            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 leading-[1.15] tracking-tight">
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white leading-[1.15] tracking-tight">
               Quantum Immigration
             </h2>
             
             {/* Description */}
             <div className="space-y-4">
-                <p className="text-gray-500 text-base md:text-lg leading-relaxed max-w-xl">
+                <p className="text-gray-500 dark:text-gray-400 text-base md:text-lg leading-relaxed max-w-xl">
                   Quantum Immigration was built to eliminate manual work and give more power to immigration consultants, along with world class AI experience to students.
                 </p>
-                <p className="text-gray-500 text-base md:text-lg leading-relaxed max-w-xl">
+                <p className="text-gray-500 dark:text-gray-400 text-base md:text-lg leading-relaxed max-w-xl">
                   Built with experienced consultants then funded by High Volt Analytics LLC.
                 </p>
             </div>
             
             {/* Button */}
             <div className="pt-2">
-              <button className="w-full sm:w-auto bg-[#111] text-white font-medium py-3.5 px-8 rounded-xl hover:bg-black transition-transform hover:-translate-y-0.5 duration-200">
+              <button className="w-full sm:w-auto bg-[#111] dark:bg-white dark:text-black text-white font-medium py-3.5 px-8 rounded-xl hover:bg-black dark:hover:bg-gray-200 transition-transform hover:-translate-y-0.5 duration-200">
                 Contact Us
               </button>
             </div>

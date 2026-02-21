@@ -1,95 +1,235 @@
 'use client';
 
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
+import { 
+  Sparkles, 
+  GitCompare, 
+  Compass, 
+  FileCheck, 
+  Send, 
+  PenTool,
+  Bell,
+  LayoutDashboard
+} from 'lucide-react';
 
-// Background remains identical for consistency
-const GlassBackground = () => (
-  <div className="absolute inset-0 z-0 pointer-events-none [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)] overflow-hidden">
-    <div className="absolute top-[-5%] left-[-10%] w-[300px] h-[300px] md:w-[900px] md:h-[900px] rounded-full opacity-60 mix-blend-multiply bg-[radial-gradient(circle,rgba(56,189,248,0.8)_0%,rgba(255,255,255,0)_70%)] blur-[40px] md:blur-[80px]" />
-    <div className="absolute top-[10%] right-[-10%] w-[250px] h-[250px] md:w-[800px] md:h-[800px] rounded-full opacity-60 mix-blend-multiply bg-[radial-gradient(circle,rgba(52,211,153,0.8)_0%,rgba(255,255,255,0)_70%)] blur-[40px] md:blur-[80px]" />
-    <div className="absolute inset-0 grid grid-cols-6 md:grid-cols-12 lg:grid-cols-[repeat(48,minmax(0,1fr))] h-full w-full">
-      {Array(48).fill(null).map((_, i) => (
-        <div key={i} className="h-full border-r border-white/20 md:border-white/30 backdrop-blur-[10px] md:backdrop-blur-[25px] shadow-[inset_0.5px_0_0_rgba(255,255,255,0.1)] md:shadow-[inset_0.5px_0_0_rgba(255,255,255,0.15)]"
-          style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%)' }}
-        />
-      ))}
+const ACCENT = { 
+  lime: '#d4ff00', 
+  purple: '#8b5cf6', 
+  dark: '#171717',
+};
+
+const features = [
+  { label: 'AI Course Matching', icon: Sparkles, iconBg: ACCENT.lime },            
+  { label: 'AI Course Comparison', icon: GitCompare, iconBg: ACCENT.purple },      
+  { label: 'Structured Guidance', icon: Compass, iconBg: ACCENT.dark },            
+  { label: 'Document Tracking', icon: FileCheck, iconBg: ACCENT.lime },            
+  { label: 'Auto Form Submission', icon: Send, iconBg: ACCENT.purple },            
+  { label: 'Tailored SOP Writing', icon: PenTool, iconBg: ACCENT.dark },           
+  { label: 'Preemptive Alerts', icon: Bell, iconBg: ACCENT.lime },                 
+  { label: 'Real-Time Dashboard', icon: LayoutDashboard, iconBg: ACCENT.purple },  
+];
+
+const positions = [
+  { top: '12%', left: 0, right: 0, margin: 'auto' }, 
+  { top: '26%', left: '6%' },                        
+  { top: '26%', right: '6%' },                       
+  { top: '50%', left: '2%' },                        
+  { top: '50%', right: '2%' },                       
+  { top: '74%', left: '6%' },                        
+  { top: '74%', right: '6%' },                       
+  { bottom: '6%', left: 0, right: 0, margin: 'auto'} 
+];
+
+// --- New Helper Component for the Rolling Text Animation ---
+const RollingTextButton = ({ text }) => {
+  return (
+    <div className="relative overflow-hidden h-[20px] flex items-center">
+      <div className="flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:-translate-y-full">
+        <span className="flex items-center justify-center h-[20px]">{text}</span>
+        <span className="flex items-center justify-center h-[20px] absolute top-full">{text}</span>
+      </div>
     </div>
-    <div className="absolute inset-0 opacity-30 md:opacity-40 mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
-  </div>
-);
+  );
+};
 
 const Hero = () => {
-  const containerRef = useRef(null);
-  
-  // High-performance scroll tracking
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
-
-  // Map scroll progress to scale (1 to 1.15)
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
+  const sectionRef = useRef(null);
+  const inView = useInView(sectionRef, { once: false, margin: '-10% 0px -10% 0px' });
 
   return (
-    <section ref={containerRef} className="relative pt-44 md:pt-52 pb-20 md:pb-40 px-4 md:px-6 flex flex-col items-center text-center min-h-screen overflow-x-hidden font-sans bg-[#F4F2F1]">
-      <GlassBackground />
+    <section
+      ref={sectionRef}
+      className="relative pt-32 pb-20 md:pt-40 md:pb-36 px-4 sm:px-6 font-sans overflow-hidden min-h-[900px] lg:min-h-[100vh] flex flex-col items-center justify-center bg-[#050505]"
+    >
+      <div className="relative z-20 w-full max-w-2xl mx-auto text-center px-4 flex flex-col items-center justify-center">
+        
+        {/* Background Orb */}
+        <div
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[500px] pointer-events-none z-[-1]"
+          style={{
+            background: 'radial-gradient(circle, rgba(0, 255, 136, 0.25) 0%, rgba(0, 191, 255, 0.2) 40%, transparent 70%)',
+            filter: 'blur(70px)'
+          }}
+          aria-hidden
+        />
 
-      <div className="relative z-20 flex flex-col items-center max-w-7xl mx-auto w-full">
-        
-        {/* Headline - Lowered with pt-44 */}
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-semibold text-gray-900 tracking-tight max-w-5xl mb-6 md:mb-8 leading-[1.2] px-2">
-          Turn your education + visa workflow into an <br className="hidden md:block" />
-          automated conversion & processing engine.
-        </h1>
-        
-        <div className="flex flex-col items-center max-w-3xl mb-8 md:mb-10 space-y-3 md:space-y-4 px-4">
-          <p className="text-gray-900 font-bold text-base md:text-xl leading-snug">
-            Stop losing leads. Stop chasing documents. Stop re-typing applications.
-          </p>
-          <p className="text-gray-500 font-normal text-sm md:text-lg leading-relaxed">
-            Quantum Immigration is a modular platform for education and migration consultants to capture more enquiries, match courses, manage documents, and lodge faster.
-          </p>
-        </div>
-        
-        <button className="bg-black text-white px-8 py-3 rounded-xl font-medium hover:scale-105 transition-all shadow-xl mb-24 active:scale-95 cursor-pointer">
-          Buy Now
-        </button>
-
-        {/* Dashboard Preview - Automated Scale on Scroll */}
-        <motion.div 
-          style={{ scale }}
-          className="w-full max-w-6xl origin-top px-2 md:px-0"
+        {/* UPDATED: Quantum Immigration Label with Moving Gold/Silver Gradient */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+          transition={{ duration: 0.5 }}
+          className="inline-flex items-center gap-2 mb-6"
         >
-          <div className="p-[1.5px] md:p-[2px] rounded-xl md:rounded-2xl bg-gradient-to-r from-blue-400 via-emerald-400 to-blue-500 shadow-2xl">
-            <div className="rounded-xl md:rounded-2xl overflow-hidden bg-[#1a1a1a] shadow-inner flex flex-col">
-              
-              {/* Browser Header */}
-              <div className="bg-[#2d2d2d] border-b border-white/10 px-3 md:px-4 py-2 md:py-3 flex items-center gap-3 md:gap-4 relative z-30">
-                <div className="flex gap-1.5 md:gap-2">
-                  <div className="w-2 md:w-3 h-2 md:h-3 rounded-full bg-[#ff5f56]"></div>
-                  <div className="w-2 md:w-3 h-2 md:h-3 rounded-full bg-[#ffbd2e]"></div>
-                  <div className="w-2 md:w-3 h-2 md:h-3 rounded-full bg-[#27c93f]"></div>
-                </div>
-                <div className="flex-1 max-w-[150px] sm:max-w-md md:max-w-2xl mx-auto bg-[#1a1a1a] border border-white/10 rounded md:rounded-md h-5 md:h-7 flex items-center justify-center text-[10px] md:text-xs text-gray-400 font-mono shadow-sm truncate px-2">
-                  quantum-immigration.com
-                </div>
-              </div>
-              
-              <div className="relative bg-[#0B1120] min-h-[250px] sm:min-h-[450px]">
-                <img 
-                  src="/dashboard-preview.png" 
-                  alt="Dashboard Interface" 
-                  className="w-full h-auto block" 
-                />
-                <div className="absolute inset-0 bg-gradient-to-b from-black/5 to-transparent pointer-events-none"></div>
-              </div>
-            </div>
-          </div>
+          {/* Sparkles icon removed here */}
+          <motion.span 
+            className="text-[12px] font-bold uppercase tracking-[0.15em] bg-clip-text text-transparent"
+            style={{
+              backgroundImage: 'linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C)',
+              backgroundSize: '200% auto'
+            }}
+            animate={{
+              backgroundPosition: ['0% center', '-200% center']
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          >
+            Quantum Immigration
+          </motion.span>
         </motion.div>
+        
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5, delay: inView ? 0.1 : 0 }}
+          className="text-4xl sm:text-5xl md:text-6xl font-medium text-white tracking-tight leading-[1.1] mb-6"
+        >
+          Next-Gen
+          <br />
+          Immigration
+        </motion.h2>
+        
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5, delay: inView ? 0.2 : 0 }}
+          className="text-gray-300 text-sm md:text-base max-w-lg mx-auto mb-10 leading-relaxed"
+        >
+          Our AI-driven platform provides personalized university matching, automated document tracking, tailored SOP writing, and structured guidance at every stage of your study abroad journey.
+        </motion.p>
+        
+        {/* UPDATED: Buttons with Gradients and Rolling Text Animation */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5, delay: inView ? 0.3 : 0 }}
+          className="flex flex-wrap items-center justify-center gap-4"
+        >
+          {/* Primary Button: Blue Gradient Background + Rolling Text */}
+          <a
+            href="#contact"
+            className="group relative inline-flex items-center justify-center px-8 py-3.5 rounded-full text-sm font-semibold text-white overflow-hidden transition-transform hover:scale-105"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-blue-500 to-blue-700" />
+            <span className="relative z-10">
+              <RollingTextButton text="Get Started" />
+            </span>
+          </a>
+
+          {/* Secondary Button: Blue/Green Gradient Border + Rolling Text */}
+          <a
+            href="#features"
+            // The outer div creates the gradient border effect
+            className="group relative p-[2px] rounded-full overflow-hidden transition-transform hover:scale-105 bg-gradient-to-r from-blue-500 to-green-500"
+          >
+            {/* The inner div is the actual button background, slightly smaller to reveal the border */}
+            <div className="relative h-full w-full bg-[#050505] rounded-full px-8 py-3.5 flex items-center justify-center transition-colors group-hover:bg-[#0a0a0a]">
+               <span className="text-sm font-medium text-white">
+                 <RollingTextButton text="Learn More" />
+               </span>
+            </div>
+          </a>
+        </motion.div>
+      </div>
+
+      {/* Floating Feature Pills (Desktop) */}
+      <div className="absolute inset-0 z-10 hidden md:block pointer-events-none">
+        <div className="relative w-full max-w-6xl h-full mx-auto">
+          {features.map((item, idx) => (
+            <FloatingPill key={idx} item={item} position={positions[idx]} inView={inView} idx={idx} />
+          ))}
+        </div>
+      </div>
+
+      {/* Mobile Feature Pills */}
+      <div className="relative z-20 flex flex-wrap justify-center gap-3 mt-16 md:hidden px-2">
+        {features.map((item, idx) => {
+          const Icon = item.icon;
+          const dynamicDelay = inView ? idx * 0.1 : (7 - idx) * 0.1;
+
+          return (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ delay: dynamicDelay, duration: 0.4 }}
+              className="flex items-center gap-2.5 pl-2 pr-4 py-2 rounded-full bg-[#111] border border-white/5"
+            >
+              <div
+                className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
+                style={{ 
+                  background: item.iconBg,
+                  color: item.iconBg === ACCENT.lime ? 'black' : 'white' 
+                }}
+              >
+                <Icon className="w-3.5 h-3.5" strokeWidth={2.5} />
+              </div>
+              <span className="text-xs font-medium text-white">{item.label}</span>
+            </motion.div>
+          );
+        })}
       </div>
     </section>
   );
 };
+
+function FloatingPill({ item, position, inView, idx }) {
+  const Icon = item.icon;
+  const iconColor = item.iconBg === '#d4ff00' ? 'text-black' : 'text-white';
+  const dynamicDelay = inView ? idx * 0.15 : (7 - idx) * 0.1;
+
+  return (
+    <motion.div
+      className="absolute flex items-center gap-3 pl-2.5 pr-5 py-2.5 rounded-full w-max pointer-events-auto border border-white/5 bg-[#111111]/90 backdrop-blur-sm shadow-xl"
+      style={{
+        top: position.top,
+        bottom: position.bottom,
+        left: position.left,
+        right: position.right,
+        margin: position.margin || '0',
+      }}
+      initial={{ opacity: 0, scale: 0.8, y: 50 }}
+      animate={inView ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.8, y: 50 }}
+      transition={{ duration: 0.5, delay: dynamicDelay, type: "spring", stiffness: 90, damping: 15 }}
+    >
+      <motion.div 
+        className="flex items-center gap-3"
+        animate={{ y: [0, -6, 0] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: idx * 0.2 }}
+      >
+        <div
+          className={`w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 ${iconColor}`}
+          style={{ background: item.iconBg }}
+        >
+          <Icon className="w-4 h-4" strokeWidth={2.5} />
+        </div>
+        <span className="text-sm font-medium text-white">{item.label}</span>
+      </motion.div>
+    </motion.div>
+  );
+}
 
 export default Hero;

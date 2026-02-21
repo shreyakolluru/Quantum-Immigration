@@ -2,9 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Dark mode aurora – plain CSS, no React. When html.dark this div is visible. */
+#dark-aurora {
+  display: none;
+}
+html.dark #dark-aurora {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(124, 255, 103, 0.75) 0%,
+    rgba(177, 158, 239, 0.85) 20%,
+    rgba(82, 39, 255, 0.9) 50%,
+    rgba(177, 158, 239, 0.8) 80%,
+    rgba(124, 255, 103, 0.65) 100%
+  );
+}
+#root {
+  position: relative;
+  z-index: 2;
+}
+html.dark #root {
+  background: transparent !important;
+}
+
 @layer base {
   body {
-    @apply bg-[#F4F2F1] antialiased overflow-x-hidden;
+    @apply bg-[#F4F2F1] dark:bg-black antialiased overflow-x-hidden;
   }
 }
 

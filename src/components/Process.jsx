@@ -66,12 +66,12 @@ const Process = () => {
 
   return (
     // Reduced vertical padding: py-8 on mobile, py-12 on desktop
-    <section className="py-8 md:py-12 bg-[#F4F2F1] font-sans">
+    <section className="py-8 md:py-12 bg-[#F4F2F1] dark:bg-black font-sans">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* CENTERED HEADER - Reduced margin bottom */}
         <div className="text-center mb-10 md:mb-14 max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-5xl font-semibold text-gray-900 tracking-tight leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
+          <h2 className="text-3xl md:text-5xl font-semibold text-gray-900 dark:text-white tracking-tight leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
             How it works in 3 simple steps
           </h2>
         </div>
@@ -100,21 +100,21 @@ const Process = () => {
                 </div>
 
                 {/* --- BACK FACE --- */}
-                <div className="absolute inset-0 h-full w-full rounded-3xl bg-white border border-gray-100 p-8 [transform:rotateY(180deg)] [backface-visibility:hidden] shadow-xl flex flex-col justify-center">
+                <div className="absolute inset-0 h-full w-full rounded-3xl bg-white dark:bg-[#141414] border border-gray-100 dark:border-white/10 p-8 [transform:rotateY(180deg)] [backface-visibility:hidden] shadow-xl flex flex-col justify-center">
                   <div className="mb-4">
-                    <span className="text-blue-600 font-bold tracking-wider text-[10px] md:text-xs uppercase mb-1 block">Phase 0{step.id}</span>
-                    <h4 className="text-lg font-bold text-gray-900 whitespace-nowrap">{step.title}</h4>
+                    <span className="text-blue-600 dark:text-cyan-400 font-bold tracking-wider text-[10px] md:text-xs uppercase mb-1 block">Phase 0{step.id}</span>
+                    <h4 className="text-lg font-bold text-gray-900 dark:text-white whitespace-nowrap">{step.title}</h4>
                   </div>
                   <ul className="space-y-3">
                     {step.bullets.map((bullet, i) => (
                       <li key={i} className="flex items-start gap-3">
                         <div className="mt-0.5 text-emerald-500 shrink-0"><CheckIcon /></div>
-                        <span className="text-sm font-medium text-gray-600">{bullet}</span>
+                        <span className="text-sm font-medium text-gray-600 dark:text-gray-300">{bullet}</span>
                       </li>
                     ))}
                   </ul>
-                  <div className="mt-auto pt-6 border-t border-gray-100">
-                     <p className="text-[10px] text-gray-400 text-center uppercase tracking-widest font-semibold">Hover to Flip</p>
+                  <div className="mt-auto pt-6 border-t border-gray-100 dark:border-white/10">
+                     <p className="text-[10px] text-gray-400 dark:text-gray-500 text-center uppercase tracking-widest font-semibold">Hover to Flip</p>
                   </div>
                 </div>
 

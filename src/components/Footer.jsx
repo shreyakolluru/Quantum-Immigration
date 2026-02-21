@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0A0A0A] pt-24 pb-8 font-sans text-white border-t border-white/5">
+    <footer className="bg-[#0A0A0A] dark:bg-black pt-24 pb-8 font-sans text-white border-t border-white/5 dark:border-white/10">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* --- CTA Section --- */}

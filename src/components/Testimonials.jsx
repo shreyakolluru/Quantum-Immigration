@@ -2,16 +2,16 @@ import React from 'react';
 
 const Testimonials = () => {
   return (
-    <section className="py-24 px-6 bg-[#F4F2F1] font-sans">
+    <section className="py-24 px-6 bg-[#F4F2F1] dark:bg-black font-sans">
       <div className="max-w-6xl mx-auto"> 
         {/* ^ Changed to max-w-6xl to stop cards from being too broad */}
 
         {/* Header */}
         <div className="text-center mb-20">
-          <div className="inline-block px-4 py-1.5 mb-6 rounded-full border border-gray-200 bg-white/50 backdrop-blur-sm">
-            <span className="text-xs font-bold text-gray-900 uppercase tracking-widest">Testimonials</span>
+          <div className="inline-block px-4 py-1.5 mb-6 rounded-full border border-gray-200 dark:border-white/10 bg-white/50 dark:bg-[#1a1a1a]/50 backdrop-blur-sm">
+            <span className="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-widest">Testimonials</span>
           </div>
-          <h2 className="text-5xl md:text-6xl font-semibold text-gray-900 tracking-tight leading-[1.1]">
+          <h2 className="text-5xl md:text-6xl font-semibold text-gray-900 dark:text-white tracking-tight leading-[1.1]">
             What Our Users Are <br /> Saying About Us
           </h2>
         </div>
@@ -24,8 +24,8 @@ const Testimonials = () => {
           {/* 10X Revenue Boost - Light Blue */}
           <div className="md:col-span-3 bg-[#E9F9FF] rounded-[32px] p-8 flex flex-col justify-between min-h-[320px] transition-transform hover:-translate-y-1 duration-300">
             <div>
-              <h3 className="text-5xl font-bold text-gray-900 mb-2">10X</h3>
-              <p className="text-gray-600 font-medium">Revenue Boost</p>
+              <h3 className="text-5xl font-bold text-gray-900 dark:text-white mb-2">10X</h3>
+              <p className="text-gray-600 dark:text-gray-300 font-medium">Revenue Boost</p>
             </div>
             <div className="mt-8">
                {/* Logo LogoIpsum */}
@@ -36,10 +36,10 @@ const Testimonials = () => {
           </div>
 
           {/* 2X Increase Efficiency - Mint Green */}
-          <div className="md:col-span-3 bg-[#E7FFF3] rounded-[32px] p-8 flex flex-col justify-between min-h-[320px] transition-transform hover:-translate-y-1 duration-300">
+          <div className="md:col-span-3 bg-[#E7FFF3] dark:bg-[#1a1a1a] rounded-[32px] p-8 flex flex-col justify-between min-h-[320px] transition-transform hover:-translate-y-1 duration-300">
             <div>
-              <h3 className="text-5xl font-bold text-gray-900 mb-2">2X</h3>
-              <p className="text-gray-600 font-medium">Increase Efficiency</p>
+              <h3 className="text-5xl font-bold text-gray-900 dark:text-white mb-2">2X</h3>
+              <p className="text-gray-600 dark:text-gray-300 font-medium">Increase Efficiency</p>
             </div>
             <div className="mt-8">
                <img src="https://logoipsum.com/logoipsum-297.svg" alt="logo" className="h-6 w-auto grayscale contrast-125" />
@@ -47,20 +47,20 @@ const Testimonials = () => {
           </div>
 
           {/* John Matthews Quote */}
-          <div className="md:col-span-6 bg-white rounded-[32px] p-10 shadow-sm border border-white flex flex-col justify-between min-h-[320px] transition-transform hover:-translate-y-1 duration-300">
-            <p className="text-xl text-gray-700 leading-relaxed font-medium">
+          <div className="md:col-span-6 bg-white dark:bg-[#141414] rounded-[32px] p-10 shadow-sm border border-white dark:border-white/10 flex flex-col justify-between min-h-[320px] transition-transform hover:-translate-y-1 duration-300">
+            <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
               "QI has completely transformed how our team manages tasks. The platform has made our workflow seamless and boosted overall productivity."
             </p>
             <div className="flex justify-between items-end mt-8">
               <div className="flex items-center gap-4">
                 <img src="https://i.pravatar.cc/150?img=11" alt="John" className="w-12 h-12 rounded-xl object-cover" />
                 <div>
-                  <h4 className="font-bold text-gray-900 text-base">John Matthews</h4>
-                  <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Project Manager</p>
+                  <h4 className="font-bold text-gray-900 dark:text-white text-base">John Matthews</h4>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wide">Project Manager</p>
                 </div>
               </div>
               <div className="bg-black p-2.5 rounded-lg">
-                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                <svg className="w-5 h-5 text-white dark:text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
               </div>
             </div>
           </div>
@@ -68,39 +68,39 @@ const Testimonials = () => {
           {/* ==================== ROW 2 ==================== */}
 
           {/* Sarah Collins Quote */}
-          <div className="md:col-span-6 bg-white rounded-[32px] p-10 shadow-sm border border-white flex flex-col justify-between min-h-[320px] transition-transform hover:-translate-y-1 duration-300">
-            <p className="text-xl text-gray-700 leading-relaxed font-medium">
+          <div className="md:col-span-6 bg-white dark:bg-[#141414] rounded-[32px] p-10 shadow-sm border border-white dark:border-white/10 flex flex-col justify-between min-h-[320px] transition-transform hover:-translate-y-1 duration-300">
+            <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
               "With QI, we've streamlined our project management, reducing time spent on administrative tasks. It's user-friendly, and our team is now more efficient than ever."
             </p>
             <div className="flex justify-between items-end mt-8">
               <div className="flex items-center gap-4">
                 <img src="https://i.pravatar.cc/150?img=5" alt="Sarah" className="w-12 h-12 rounded-xl object-cover" />
                 <div>
-                  <h4 className="font-bold text-gray-900 text-base">Sarah Collins</h4>
-                  <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Operations Lead</p>
+                  <h4 className="font-bold text-gray-900 dark:text-white text-base">Sarah Collins</h4>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wide">Operations Lead</p>
                 </div>
               </div>
               <div className="bg-black p-2.5 rounded-lg">
-                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                <svg className="w-5 h-5 text-white dark:text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
               </div>
             </div>
           </div>
 
           {/* David Chen Quote */}
-          <div className="md:col-span-6 bg-white rounded-[32px] p-10 shadow-sm border border-white flex flex-col justify-between min-h-[320px] transition-transform hover:-translate-y-1 duration-300">
-            <p className="text-xl text-gray-700 leading-relaxed font-medium">
+          <div className="md:col-span-6 bg-white dark:bg-[#141414] rounded-[32px] p-10 shadow-sm border border-white dark:border-white/10 flex flex-col justify-between min-h-[320px] transition-transform hover:-translate-y-1 duration-300">
+            <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
               "We saw a massive improvement in our team's collaboration and communication. QI helped us organize tasks efficiently, leading to better outcomes across all projects."
             </p>
             <div className="flex justify-between items-end mt-8">
               <div className="flex items-center gap-4">
                 <img src="https://i.pravatar.cc/150?img=33" alt="David" className="w-12 h-12 rounded-xl object-cover" />
                 <div>
-                  <h4 className="font-bold text-gray-900 text-base">David Chen</h4>
-                  <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Team Lead</p>
+                  <h4 className="font-bold text-gray-900 dark:text-white text-base">David Chen</h4>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wide">Team Lead</p>
                 </div>
               </div>
               <div className="bg-black p-2.5 rounded-lg">
-                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                <svg className="w-5 h-5 text-white dark:text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
               </div>
             </div>
           </div>
@@ -122,20 +122,20 @@ const Testimonials = () => {
           </div>
 
           {/* Olivia Turner Quote */}
-          <div className="md:col-span-6 bg-white rounded-[32px] p-10 shadow-sm border border-white flex flex-col justify-between min-h-[320px] transition-transform hover:-translate-y-1 duration-300">
-            <p className="text-xl text-gray-700 leading-relaxed font-medium">
+          <div className="md:col-span-6 bg-white dark:bg-[#141414] rounded-[32px] p-10 shadow-sm border border-white dark:border-white/10 flex flex-col justify-between min-h-[320px] transition-transform hover:-translate-y-1 duration-300">
+            <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
               "We've increased our efficiency by at least 40% since implementing QI. It's helped our team stay aligned and deliver exceptional results."
             </p>
             <div className="flex justify-between items-end mt-8">
               <div className="flex items-center gap-4">
                 <img src="https://i.pravatar.cc/150?img=26" alt="Olivia" className="w-12 h-12 rounded-xl object-cover" />
                 <div>
-                  <h4 className="font-bold text-gray-900 text-base">Olivia Turner</h4>
-                  <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Operations Director</p>
+                  <h4 className="font-bold text-gray-900 dark:text-white text-base">Olivia Turner</h4>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wide">Operations Director</p>
                 </div>
               </div>
               <div className="bg-black p-2.5 rounded-lg">
-                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                <svg className="w-5 h-5 text-white dark:text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
               </div>
             </div>
           </div>

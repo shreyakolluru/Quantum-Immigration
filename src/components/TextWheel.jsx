@@ -24,11 +24,10 @@ const TextWheel = () => {
 
   return (
     // Added pb-8 for slight bottom padding
-    <div className="w-full pt-4 pb-8 overflow-hidden bg-[#F4F2F1]">
-      {/* Responsive Fix: Stack on mobile/small tablet, row on md+ */}
+    <div className="w-full pt-4 pb-8 overflow-hidden bg-[#F4F2F1] dark:bg-black">
       <div className="flex flex-col md:flex-row w-full items-center justify-center gap-y-2 md:gap-x-4 px-4 text-center md:text-left">
           <div className="flex-shrink-0">
-            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 tracking-tight">
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white tracking-tight">
               Wave goodbye to
             </h2>
           </div>

@@ -1,137 +1,106 @@
-import React from 'react';
+'use client';
 
-const Comparison = () => {
-  const leftFeatures = [
-    "Generic university and course selection",
-    "Manual course comparison with no goal-based reasoning",
-    "No clear guidelines for next steps",
-    "Manual Checklist for document follow-up",
-    "Repetitive manual data entry",
-    "Manual application form submission",
-    "No structured support for SOPs",
-    "Manual follow-ups and deadline tracking",
-    "Difficult to track student status"
-  ];
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
-  const rightFeatures = [
-    "AI-driven Personalized course matching",
-    "AI-driven comparison with clear reasoning",
-    "Structured guidance with defined timelines",
-    "Automated document tracking & follow-up",
-    "Automated application form completion",
-    "Automatic Form Submission",
-    "Specialised SOP writing tailored to profiles",
-    "Preemptive automated alerts & communications",
-    "Real-time dashboard for clear visibility"
-  ];
+const Comparison = ({ isDark = false }) => {
+  const containerRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end end'],
+  });
+
+  const scaleRange = isMobile ? [0.72, 0.94] : [0.78, 1];
+  const rotateX = useTransform(scrollYProgress, [0, 1], [18, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], scaleRange);
+  const translateY = useTransform(scrollYProgress, [0, 1], [0, -40]);
 
   return (
-    <section className="py-12 md:py-24 px-4 sm:px-6 bg-[#F4F2F1] font-sans overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        
-        {/* --- Header --- */}
-        <div className="text-center mb-12 md:mb-16">
-          <div className="inline-block px-4 py-1.5 mb-6 rounded-full border border-gray-200 bg-white shadow-sm">
-            <span className="text-xs font-bold text-gray-900 uppercase tracking-widest">Comparison</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-gray-900 mb-6 tracking-tight">
-            What Sets Us Apart
-          </h2>
-          <p className="text-gray-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            Discover how we outperform other platforms with superior features and unmatched ease of use.
-          </p>
+    <section
+      ref={containerRef}
+      className="relative min-h-[130vh] flex items-start justify-center px-4 md:px-6 overflow-x-hidden font-sans bg-[#F4F2F1] dark:bg-black"
+    >
+      <div
+        className="relative z-20 pt-36 md:pt-44 pb-2 md:pb-3 w-full max-w-7xl mx-auto flex flex-col items-center text-center"
+        style={{ perspective: '1200px' }}
+      >
+        <div className="flex flex-col items-center w-full mb-20 md:mb-28">
+          <motion.h1
+            initial={{ opacity: 0, y: 48, scale: 0.98, filter: 'blur(14px)' }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+            transition={{ duration: 1.35, ease: [0.19, 1, 0.22, 1] }}
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-semibold text-gray-900 dark:text-white tracking-tight max-w-5xl mb-6 md:mb-8 leading-[1.2] px-2"
+          >
+            Turn your education + visa workflow into an <br className="hidden md:block" />
+            automated conversion & processing engine.
+          </motion.h1>
+
+          <motion.div
+            initial={{ opacity: 0, y: 40, scale: 0.98, filter: 'blur(12px)' }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+            transition={{ duration: 1.15, delay: 0.45, ease: [0.19, 1, 0.22, 1] }}
+            className="flex flex-col items-center max-w-3xl mb-8 md:mb-10 space-y-3 md:space-y-4 px-4"
+          >
+            <p className="text-gray-900 dark:text-white font-bold text-base md:text-xl leading-snug">
+              Stop losing leads. Stop chasing documents. Stop re-typing applications.
+            </p>
+            <p className="text-gray-500 dark:text-gray-400 font-normal text-sm md:text-lg leading-relaxed">
+              Quantum Immigration is a modular platform for education and migration consultants to capture more enquiries, match courses, manage documents, and lodge faster.
+            </p>
+          </motion.div>
+
+          <motion.button
+            initial={{ opacity: 0, y: 32, scale: 0.97, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+            transition={{ duration: 1, delay: 0.85, ease: [0.19, 1, 0.22, 1] }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-black dark:bg-white dark:text-black text-white px-8 py-3 rounded-xl font-medium transition-all shadow-xl cursor-pointer"
+          >
+            Buy Now
+          </motion.button>
         </div>
 
-        {/* --- Comparison Grid --- */}
-        <div className="relative flex flex-col lg:flex-row items-stretch justify-center gap-8 lg:gap-[120px] mb-12 md:mb-16 max-w-6xl mx-auto">
-          
-          {/* === THE CENTRAL CONNECTOR === */}
-          {/* Hidden on small screens, shown as a floating bridge on large screens */}
-          <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 top-0 z-30 flex-col items-center w-[120px] pointer-events-none">
-             <div className="relative z-40 mt-[60px]"> 
-               <div className="bg-[#0A0A0A] text-white text-[15px] font-medium rounded-full px-5 py-2.5 flex items-center justify-center shadow-lg min-w-[60px]">
-                 V/S
-               </div>
-             </div>
-
-             <svg className="absolute top-[95px] left-0 w-full h-[50px] overflow-visible" viewBox="0 0 120 50" fill="none">
-                <defs>
-                  <linearGradient id="rightPipeGrad" x1="60" y1="0" x2="120" y2="0" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stopColor="#22D3EE" />
-                    <stop offset="100%" stopColor="#3B82F6" />
-                  </linearGradient>
-                </defs>
-                <path d="M 45 -5 L 45 25 Q 45 45 25 45 L -2 45" stroke="#D4D4D4" strokeWidth="2" fill="none" />
-                <path d="M 75 -5 L 75 25 Q 75 45 95 45 L 122 45" stroke="url(#rightPipeGrad)" strokeWidth="2" fill="none" />
-             </svg>
-          </div>
-
-          {/* Mobile V/S Badge (Only visible on small/medium screens) */}
-          <div className="lg:hidden flex justify-center -mb-4 z-20">
-             <div className="bg-[#0A0A0A] text-white text-xs font-bold rounded-full px-4 py-2 shadow-lg">
-                V/S
-             </div>
-          </div>
-
-          {/* --- LEFT CARD (Competitors) --- */}
-          <div className="flex-1 relative rounded-[24px] md:rounded-[32px] bg-[#EAE8E6] z-10">
-            {/* Connection Dot - hidden on mobile */}
-            <div className="hidden lg:block absolute -right-[6px] top-[134px] w-[12px] h-[12px] bg-white border-2 border-[#D4D4D4] rounded-full z-50"></div>
-            
-            <div className="flex flex-col h-full rounded-[24px] md:rounded-[32px] overflow-hidden">
-                <div className="h-[100px] md:h-[140px] flex items-center justify-center border-b border-gray-300/60 bg-[#EAE8E6]">
-                  <h3 className="text-base md:text-xl font-bold text-gray-800 uppercase tracking-wide">OTHER PLATFORMS</h3>
+        <motion.div
+          style={{
+            rotateX,
+            scale,
+            translateY,
+            boxShadow:
+              '0 0 0 1px rgba(0,0,0,0.03), 0 2px 4px rgba(0,0,0,0.05), 0 12px 24px rgba(0,0,0,0.05), 0 24px 48px rgba(0,0,0,0.08), 0 48px 96px rgba(0,0,0,0.06)',
+          }}
+          className="w-full max-w-6xl mx-auto px-2 md:px-0 origin-center"
+        >
+          <div className="rounded-xl md:rounded-2xl overflow-hidden bg-[#1a1a1a] flex flex-col border border-white/10 shadow-2xl">
+              <div className="bg-[#2d2d2d] border-b border-white/10 px-3 md:px-4 py-2 md:py-3 flex items-center gap-3 md:gap-4 relative z-30">
+                <div className="flex gap-1.5 md:gap-2">
+                  <div className="w-2 md:w-3 h-2 md:h-3 rounded-full bg-[#ff5f56]" />
+                  <div className="w-2 md:w-3 h-2 md:h-3 rounded-full bg-[#ffbd2e]" />
+                  <div className="w-2 md:w-3 h-2 md:h-3 rounded-full bg-[#27c93f]" />
                 </div>
-                <div className="p-6 md:p-10 space-y-4 md:space-y-6 flex-grow">
-                {leftFeatures.map((item, idx) => (
-                    <div key={idx} className="flex items-start gap-3 md:gap-4 text-gray-500">
-                    <svg className="w-5 h-5 mt-0.5 flex-shrink-0 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                    </svg>
-                    <span className="text-sm md:text-[15px] font-medium leading-snug">{item}</span>
-                    </div>
-                ))}
+                <div className="flex-1 max-w-[150px] sm:max-w-md md:max-w-2xl mx-auto bg-[#1a1a1a] border border-white/10 rounded md:rounded-md h-5 md:h-7 flex items-center justify-center text-[10px] md:text-xs text-gray-400 font-mono shadow-sm truncate px-2">
+                  quantum-immigration.com
                 </div>
+              </div>
+              <div className="relative bg-[#0B1120] min-h-[250px] sm:min-h-[450px]">
+                <img
+                  src="/dashboard-preview.png"
+                  alt="Dashboard Interface"
+                  className="w-full h-auto block"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/5 to-transparent pointer-events-none" />
+              </div>
             </div>
-          </div>
-
-          {/* --- RIGHT CARD (Quantum) --- */}
-          <div className="flex-1 relative rounded-[26px] md:rounded-[34px] p-[1.5px] bg-gradient-to-b from-blue-500 to-cyan-300 shadow-2xl shadow-cyan-100/40 z-10">
-            {/* Connection Dot - hidden on mobile */}
-            <div className="hidden lg:block absolute -left-[6px] top-[134px] w-[12px] h-[12px] bg-white border-[2.5px] border-cyan-400 rounded-full z-50"></div>
-            
-            <div className="bg-white w-full h-full rounded-[24px] md:rounded-[32px] overflow-hidden flex flex-col relative">
-               <div className="h-[100px] md:h-[140px] flex items-center justify-center border-b border-blue-100 relative bg-white">
-                 <div className="flex items-center gap-2 md:gap-3">
-                   <img src="/favicon.png" alt="Quantum Icon" className="w-6 h-6 md:w-8 md:h-8 object-contain" />
-                   <span className="text-lg md:text-xl font-bold text-blue-900 tracking-tight">Quantum <span className="text-cyan-500">Immigration</span></span>
-                 </div>
-               </div>
-               
-               <div className="p-6 md:p-10 space-y-4 md:space-y-6 flex-grow bg-white">
-                  {rightFeatures.map((item, idx) => (
-                    <div key={idx} className="flex items-start gap-3 md:gap-4">
-                      <div className="w-5 h-5 md:w-6 md:h-6 mt-0.5 rounded-md md:rounded-lg bg-[#111] flex items-center justify-center flex-shrink-0 shadow-md shadow-gray-300">
-                        <svg className="w-3 md:w-3.5 h-3 md:h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <span className="text-sm md:text-[15px] font-semibold text-gray-800 leading-snug">{item}</span>
-                    </div>
-                  ))}
-               </div>
-            </div>
-          </div>
-
-        </div>
-
-        {/* --- CTA Button --- */}
-        <div className="flex justify-center px-4">
-          <button className="w-full sm:w-auto bg-[#111] text-white text-base font-medium py-4 px-10 rounded-xl hover:bg-black transition-all hover:-translate-y-1 shadow-xl shadow-gray-200">
-            Book a Demo
-          </button>
-        </div>
-
+        </motion.div>
       </div>
     </section>
   );
